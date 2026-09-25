@@ -3,12 +3,7 @@ import { useRaffle } from '../context/RaffleContext';
 import ExcelLoadButton from './ExcelLoadButton';
 import { exportResults } from '../utils/export';
 
-export default function AdminPanel({
-  onClose,
-  onViewList,
-  onHistory,
-  onLoadDemo,
-}) {
+export default function AdminPanel({ onClose, onViewList }) {
   const {
     state,
     stats,
@@ -22,7 +17,6 @@ export default function AdminPanel({
   const [premioNames, setPremioNames] = useState(
     state.premios.map((p) => ({ ...p }))
   );
-  const [loadNotice, setLoadNotice] = useState(null);
 
   const handleReset = () => {
     resetRaffle();
@@ -72,23 +66,14 @@ export default function AdminPanel({
             </div>
           </div>
 
-          {state.demoMode && (
-            <div className="alert alert--warning">Modo demo activo</div>
-          )}
-
           <div className="admin-actions">
             <ExcelLoadButton
               className="btn btn--secondary admin-action-btn"
               label="Cargar Excel (nombre y DNI)"
-              onLoaded={({ count }) => setLoadNotice(`${count} participante(s) cargados.`)}
             />
 
             <button className="btn btn--secondary admin-action-btn" onClick={onViewList}>
               Ver participantes
-            </button>
-
-            <button className="btn btn--secondary admin-action-btn" onClick={onHistory}>
-              Ver historial
             </button>
 
             <button className="btn btn--secondary admin-action-btn" onClick={handleExport}>
@@ -104,20 +89,11 @@ export default function AdminPanel({
 
             <button
               className="btn btn--secondary admin-action-btn"
-              onClick={onLoadDemo}
-            >
-              Modo demo
-            </button>
-
-            <button
-              className="btn btn--secondary admin-action-btn"
               onClick={() => setEditingPremios(!editingPremios)}
             >
               Editar premios
             </button>
           </div>
-
-          {loadNotice && <div className="alert alert--success">{loadNotice}</div>}
 
           {editingPremios && (
             <div className="admin-premios-edit">

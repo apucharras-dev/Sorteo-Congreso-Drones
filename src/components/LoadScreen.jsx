@@ -1,30 +1,21 @@
-import { useRaffle } from '../context/RaffleContext';
 import ExcelLoadButton from './ExcelLoadButton';
 import Logo from './Logo';
 
 export default function LoadScreen() {
-  const { loadDemo } = useRaffle();
-
   return (
     <div className="load-screen">
       <Logo size="large" />
       <p className="hero-subtitle">Tucumán, Argentina</p>
       <h1 className="hero-heading">
-        <span className="hero-heading__sorteo">Sorteo</span>
-        <span className="hero-heading__oficial">Oficial</span>
+        <span className="hero-heading__sorteo">Iniciar</span>
+        <span className="hero-heading__oficial">Sorteo</span>
       </h1>
 
       <div className="load-screen__actions">
-        <div className="btn-group">
-          <ExcelLoadButton
-            className="btn btn--cta btn--large load-btn"
-            label="Cargar Excel (nombre y DNI)"
-          />
-
-          <button className="btn btn--secondary btn--large" type="button" onClick={loadDemo}>
-            Modo demo
-          </button>
-        </div>
+        <ExcelLoadButton
+          className="btn btn--cta btn--large load-btn"
+          label="Cargar Excel (nombre y DNI)"
+        />
       </div>
 
       <p className="load-screen__hint">

@@ -6,7 +6,6 @@ import LoadScreen from './components/LoadScreen';
 import MainScreen from './components/MainScreen';
 import FinalScreen from './components/FinalScreen';
 import SessionModal from './components/SessionModal';
-import HistoryPanel from './components/HistoryPanel';
 import AdminPanel from './components/AdminPanel';
 import ParticipantsModal from './components/ParticipantsModal';
 
@@ -16,11 +15,9 @@ function AppContent() {
     allWinnersConfirmed,
     restoreSession,
     startNewSession,
-    loadDemo,
   } = useRaffle();
 
   const [showSessionModal, setShowSessionModal] = useState(false);
-  const [showHistory, setShowHistory] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
   const [showParticipants, setShowParticipants] = useState(false);
   const [initialized, setInitialized] = useState(false);
@@ -45,6 +42,10 @@ function AppContent() {
     setInitialized(true);
   };
 
+  const handleGoHome = useCallback(() => {
+    startNewSession();
+  }, [startNewSession]);
+
   const handleFullscreen = useCallback(() => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(() => {});
@@ -68,7 +69,11 @@ function AppContent() {
     return (
       <>
         <TechBackground />
-        <FinalScreen premios={state.premios} winners={state.winners} />
+        <FinalScreen
+          premios={state.premios}
+          winners={state.winners}
+          onGoHome={handleGoHome}
+        />
         <button
           className="admin-fab"
           onClick={() => setShowAdmin(true)}
@@ -80,8 +85,12 @@ function AppContent() {
           <AdminPanel
             onClose={() => setShowAdmin(false)}
             onViewList={() => { setShowAdmin(false); setShowParticipants(true); }}
-            onHistory={() => { setShowAdmin(false); setShowHistory(true); }}
-            onLoadDemo={loadDemo}
+          />
+        )}
+        {showParticipants && (
+          <ParticipantsModal
+            participants={state.participants}
+            onClose={() => setShowParticipants(false)}
           />
         )}
       </>
@@ -97,8 +106,8 @@ function AppContent() {
       ) : (
         <MainScreen
           onViewList={() => setShowParticipants(true)}
-          onHistory={() => setShowHistory(true)}
           onFullscreen={handleFullscreen}
+          onGoHome={handleGoHome}
         />
       )}
 
@@ -110,20 +119,10 @@ function AppContent() {
         ⚙
       </button>
 
-      {showHistory && (
-        <HistoryPanel
-          history={state.history}
-          premios={state.premios}
-          onClose={() => setShowHistory(false)}
-        />
-      )}
-
       {showAdmin && (
         <AdminPanel
           onClose={() => setShowAdmin(false)}
           onViewList={() => { setShowAdmin(false); setShowParticipants(true); }}
-          onHistory={() => { setShowAdmin(false); setShowHistory(true); }}
-          onLoadDemo={loadDemo}
         />
       )}
 

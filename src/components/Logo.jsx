@@ -1,8 +1,10 @@
 import LogoIcon from './LogoIcon';
 
-export default function Logo({ size = 'large' }) {
-  return (
-    <div className={`logo logo--${size}`}>
+export default function Logo({ size = 'large', onClick, title }) {
+  const className = `logo logo--${size}${onClick ? ' logo--clickable' : ''}`;
+
+  const content = (
+    <>
       <div className="logo__icon" aria-hidden="true">
         <LogoIcon className="logo__svg" />
       </div>
@@ -13,6 +15,21 @@ export default function Logo({ size = 'large' }) {
           <span className="logo__year">2026</span>
         </span>
       </div>
-    </div>
+    </>
   );
+
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        className={className}
+        onClick={onClick}
+        title={title ?? 'Volver al inicio'}
+      >
+        {content}
+      </button>
+    );
+  }
+
+  return <div className={className}>{content}</div>;
 }

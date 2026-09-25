@@ -46,7 +46,7 @@ function TechParticles() {
   );
 }
 
-export default function FinalScreen({ premios, winners }) {
+export default function FinalScreen({ premios, winners, onGoHome }) {
   return (
     <div className="final-screen">
       <TechParticles />
@@ -57,7 +57,7 @@ export default function FinalScreen({ premios, winners }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
-        <Logo size="small" />
+        <Logo size="small" onClick={onGoHome} />
 
         <motion.h1
           className="final-screen__title"
