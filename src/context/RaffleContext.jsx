@@ -34,16 +34,40 @@ const initialState = {
   soundEnabled: true,
   loaded: false,
   duplicatesWarning: [],
+  importWarnings: [],
 };
+
+function buildImportWarnings({ duplicates, missingDniColumn, withoutDni }) {
+  const warnings = [];
+  if (duplicates?.length > 0) {
+    warnings.push(
+      `Se omitieron ${duplicates.length} fila(s) duplicada(s) (mismo DNI o nombre).`
+    );
+  }
+  if (missingDniColumn) {
+    warnings.push(
+      'No se detectó columna DNI. Agregá "DNI" o "Documento" para identificar a cada persona.'
+    );
+  } else if (withoutDni > 0) {
+    warnings.push(`${withoutDni} participante(s) no tienen DNI en el archivo.`);
+  }
+  return warnings;
+}
 
 function raffleReducer(state, action) {
   switch (action.type) {
     case 'LOAD_PARTICIPANTS': {
-      const { participants, duplicates, demoMode } = action.payload;
+      const { participants, duplicates, demoMode, missingDniColumn, withoutDni } =
+        action.payload;
       return {
         ...initialState,
         participants,
         duplicatesWarning: duplicates || [],
+        importWarnings: buildImportWarnings({
+          duplicates,
+          missingDniColumn,
+          withoutDni,
+        }),
         demoMode: demoMode || false,
         loaded: true,
         premios: state.premios,
@@ -222,9 +246,15 @@ export function RaffleProvider({ children }) {
     return state.participants.filter((p) => !excluded.includes(p.id));
   }, [state.participants, getExcludedIds]);
 
-  const loadParticipants = useCallback((participants, duplicates, demoMode = false) => {
-    dispatch({ type: 'LOAD_PARTICIPANTS', payload: { participants, duplicates, demoMode } });
-  }, []);
+  const loadParticipants = useCallback(
+    (participants, duplicates, demoMode = false, importMeta = {}) => {
+      dispatch({
+        type: 'LOAD_PARTICIPANTS',
+        payload: { participants, duplicates, demoMode, ...importMeta },
+      });
+    },
+    []
+  );
 
   const loadDemo = useCallback(() => {
     const participants = createParticipantsFromDemo(DEMO_PARTICIPANTS);

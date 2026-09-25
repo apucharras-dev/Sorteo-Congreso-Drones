@@ -92,11 +92,14 @@ export function parseParticipantsFromSheet(data) {
 
   if (participants.length === 0) {
     throw new Error(
-      'No se encontraron participantes válidos. Verificá que el archivo tenga una columna de Nombre o Nombre completo.'
+      'No se encontraron participantes válidos. Verificá que el archivo tenga columnas de Nombre (o Nombre completo) y DNI.'
     );
   }
 
-  return { participants, duplicates };
+  const missingDniColumn = cols.dni === -1;
+  const withoutDni = participants.filter((p) => !p.dni).length;
+
+  return { participants, duplicates, missingDniColumn, withoutDni };
 }
 
 export function readExcelFile(file) {

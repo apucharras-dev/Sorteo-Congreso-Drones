@@ -436,6 +436,45 @@ body {
   color: var(--yellow);
 }
 
+.alert--success {
+  background: rgba(39, 171, 131, 0.2);
+  border: 1px solid rgba(39, 171, 131, 0.45);
+  color: #7dffc8;
+}
+
+.excel-load-button {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.excel-load-button__error {
+  font-size: 0.75rem;
+  color: #ff8a8a;
+  max-width: 280px;
+  text-align: center;
+}
+
+.btn--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.main-screen__notices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.main-screen__notice {
+  width: 100%;
+}
+
 /* ─── Demo Banner ─── */
 .demo-banner {
   position: fixed;

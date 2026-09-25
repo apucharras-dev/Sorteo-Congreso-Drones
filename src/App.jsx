@@ -93,7 +93,7 @@ function AppContent() {
       <TechBackground />
 
       {!state.loaded ? (
-        <LoadScreen onViewList={() => {}} />
+        <LoadScreen />
       ) : (
         <MainScreen
           onViewList={() => setShowParticipants(true)}

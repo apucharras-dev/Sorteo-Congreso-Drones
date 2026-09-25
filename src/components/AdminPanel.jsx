@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useRaffle } from '../context/RaffleContext';
-import { readExcelFile } from '../utils/participants';
+import ExcelLoadButton from './ExcelLoadButton';
 import { exportResults } from '../utils/export';
 
 export default function AdminPanel({
@@ -15,43 +15,19 @@ export default function AdminPanel({
     resetRaffle,
     toggleSound,
     updatePremios,
-    loadParticipants,
   } = useRaffle();
 
-  const fileRef = useRef(null);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [editingPremios, setEditingPremios] = useState(false);
   const [premioNames, setPremioNames] = useState(
     state.premios.map((p) => ({ ...p }))
   );
-  const [loadError, setLoadError] = useState(null);
+  const [loadNotice, setLoadNotice] = useState(null);
 
   const handleReset = () => {
     resetRaffle();
     setShowResetConfirm(false);
     onClose();
-  };
-
-  const handleFileReload = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const drawing = Object.values(state.prizeStates).some(
-      (ps) => ps.status === 'drawing' || ps.status === 'selected'
-    );
-    if (drawing) {
-      setLoadError('No se puede cambiar el archivo durante un sorteo activo.');
-      return;
-    }
-
-    try {
-      const { participants, duplicates } = await readExcelFile(file);
-      loadParticipants(participants, duplicates);
-      setLoadError(null);
-    } catch (err) {
-      setLoadError(err.message);
-    }
-    if (fileRef.current) fileRef.current.value = '';
   };
 
   const handleSavePremios = () => {
@@ -101,16 +77,11 @@ export default function AdminPanel({
           )}
 
           <div className="admin-actions">
-            <label className="btn btn--secondary admin-action-btn">
-              <input
-                ref={fileRef}
-                type="file"
-                accept=".xlsx,.xls,.csv"
-                onChange={handleFileReload}
-                hidden
-              />
-              Cargar otro Excel
-            </label>
+            <ExcelLoadButton
+              className="btn btn--secondary admin-action-btn"
+              label="Cargar Excel (nombre y DNI)"
+              onLoaded={({ count }) => setLoadNotice(`${count} participante(s) cargados.`)}
+            />
 
             <button className="btn btn--secondary admin-action-btn" onClick={onViewList}>
               Ver participantes
@@ -146,7 +117,7 @@ export default function AdminPanel({
             </button>
           </div>
 
-          {loadError && <div className="alert alert--error">{loadError}</div>}
+          {loadNotice && <div className="alert alert--success">{loadNotice}</div>}
 
           {editingPremios && (
             <div className="admin-premios-edit">
