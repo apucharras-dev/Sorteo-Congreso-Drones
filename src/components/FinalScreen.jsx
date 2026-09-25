@@ -81,6 +81,9 @@ export default function FinalScreen({ premios, winners, onGoHome }) {
                 transition={{ delay: 0.6 + i * 0.3, duration: 0.6 }}
               >
                 <h3 className="final-winner-card__premio">{premio.nombre}</h3>
+                {premio.empresa && (
+                  <p className="final-winner-card__empresa">{premio.empresa}</p>
+                )}
                 <div className="final-winner-card__name">
                   {winner.participant.nombre}
                 </div>

@@ -121,9 +121,7 @@ export default function PrizeCard({ premio }) {
   const showWinner = status === PRIZE_STATUS.CONFIRMED && winner;
   const showIdle = !showAnimation && !showPresence && !showWinner;
 
-  const sortearLabel = hasAttempts
-    ? 'Volver a sortear'
-    : `Sortear ${premio.nombre}`;
+  const sortearLabel = hasAttempts ? 'Volver a sortear' : 'Sortear premio';
 
   return (
     <div className={`prize-card prize-card--${status}`}>
@@ -146,7 +144,12 @@ export default function PrizeCard({ premio }) {
             />
           ) : (
             <>
-              <h3 className="prize-card__title">{premio.nombre}</h3>
+              <div className="prize-card__titles">
+                <h3 className="prize-card__title">{premio.nombre}</h3>
+                {premio.empresa && (
+                  <p className="prize-card__empresa">{premio.empresa}</p>
+                )}
+              </div>
               {canEditName && (
                 <button
                   type="button"

@@ -1,11 +1,10 @@
 import { useRaffle } from '../context/RaffleContext';
 import Logo from './Logo';
-import { LoadedBanner } from './LoadScreen';
 import ExcelLoadButton from './ExcelLoadButton';
 import PrizeCard from './PrizeCard';
 
 export default function MainScreen({ onViewList, onFullscreen, onGoHome }) {
-  const { state, stats } = useRaffle();
+  const { state } = useRaffle();
 
   return (
     <div className="main-screen">
@@ -17,8 +16,6 @@ export default function MainScreen({ onViewList, onFullscreen, onGoHome }) {
           <span className="hero-heading__oficial">Oficial</span>
         </h1>
       </header>
-
-      <LoadedBanner count={stats.total} onViewList={onViewList} />
 
       <div className="main-screen__prizes">
         {state.premios.map((premio) => (

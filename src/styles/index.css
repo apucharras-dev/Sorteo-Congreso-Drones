@@ -618,11 +618,26 @@ body {
   gap: 0.35rem;
 }
 
+.prize-card__titles {
+  flex: 1;
+  min-width: 0;
+}
+
 .prize-card__title {
-  font-size: 1.1rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  text-transform: none;
+}
+
+.prize-card__empresa {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: var(--yellow);
 }
 
 .prize-card__edit-dot {
@@ -1259,12 +1274,22 @@ body {
 }
 
 .final-winner-card__premio {
-  font-size: 0.8rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: none;
+  margin-bottom: 0.35rem;
+  line-height: 1.35;
+}
+
+.final-winner-card__empresa {
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.15em;
-  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 0.75rem;
 }
 
 .final-winner-card__name {
