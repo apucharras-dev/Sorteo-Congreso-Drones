@@ -626,9 +626,9 @@ body {
 .prize-card__title {
   font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.06em;
   line-height: 1.35;
-  text-transform: none;
+  text-transform: uppercase;
 }
 
 .prize-card__empresa {
@@ -1276,9 +1276,9 @@ body {
 .final-winner-card__premio {
   font-size: 0.95rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.85);
-  text-transform: none;
+  text-transform: uppercase;
   margin-bottom: 0.35rem;
   line-height: 1.35;
 }
